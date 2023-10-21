@@ -4,20 +4,4 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
 
-    <listener>
-        <listener-class>com.example.lab1.listener.CreateDataSource</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>com.example.lab1.listener.CreateServices</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>com.example.lab1.listener.InitializeData</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>com.example.lab1.listener.CreateControllers</listener-class>
-    </listener>
-
 </web-app>

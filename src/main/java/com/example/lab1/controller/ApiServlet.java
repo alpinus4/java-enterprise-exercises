@@ -1,9 +1,7 @@
 package com.example.lab1.controller;
 
-import java.io.*;
-
 import com.example.lab1.student.StudentController;
-import com.example.lab1.student.StudentService;
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -21,7 +19,12 @@ import java.util.regex.Pattern;
 })
 @MultipartConfig(maxFileSize = 200 * 1024)
 public class ApiServlet extends HttpServlet {
-    private StudentController studentController;
+    private final StudentController studentController;
+
+    @Inject
+    public ApiServlet(StudentController studentController) {
+        this.studentController = studentController;
+    }
 
     public static final class Paths {
 
@@ -64,11 +67,6 @@ public class ApiServlet extends HttpServlet {
         } else {
             super.service(request, response);
         }
-    }
-
-    public void init() throws ServletException {
-        super.init();
-        studentController = (StudentController) getServletContext().getAttribute("studentController");
     }
 
     @SuppressWarnings("RedundantThrows")

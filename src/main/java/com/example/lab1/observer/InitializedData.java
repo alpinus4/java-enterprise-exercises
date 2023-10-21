@@ -1,23 +1,40 @@
-package com.example.lab1.listener;
+package com.example.lab1.observer;
 
 import com.example.lab1.beer.Beer;
 import com.example.lab1.brewery.Brewery;
 import com.example.lab1.student.Student;
 import com.example.lab1.student.StudentService;
-import jakarta.servlet.ServletContextEvent;
-import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.context.control.RequestContextController;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import lombok.SneakyThrows;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-@WebListener
-public class InitializeData implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        StudentService studentService = (StudentService) event.getServletContext().getAttribute("studentService");
+@ApplicationScoped
+public class InitializedData {
 
+    private final StudentService studentService;
+
+    private final RequestContextController requestContextController;
+
+    @Inject
+    public InitializedData(StudentService studentService, RequestContextController requestContextController) {
+        this.studentService = studentService;
+        this.requestContextController = requestContextController;
+    }
+
+    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        init();
+    }
+
+    @SneakyThrows
+    private void init() {
         Brewery browary_lubelskie_sa = Brewery.builder().id(UUID.randomUUID()).establishmentDate(LocalDate.of(1846, 1, 1)).name("Perla browary lubelskie SA").location("Lublin").build();
 
         Beer perla_miodowa = Beer.builder().id(UUID.randomUUID()).name("Perla miodowa").brewery(browary_lubelskie_sa).type(Beer.Type.LIGHT).brewingDate(LocalDate.of(2023, 9, 9)).alcoholContent(6).build();
@@ -43,5 +60,22 @@ public class InitializeData implements ServletContextListener {
         studentService.create(asia);
         studentService.create(ania);
     }
+
+    /**
+     * @param name name of the desired resource
+     * @return array of bytes read from the resource
+     */
+    @SneakyThrows
+    private byte[] getResourceAsByteArray(String name) {
+        try (InputStream is = this.getClass().getResourceAsStream(name)) {
+            if (is != null) {
+                return is.readAllBytes();
+            } else {
+                throw new IllegalStateException("Unable to get resource %s".formatted(name));
+            }
+        }
+    }
+
+
 
 }

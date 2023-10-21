@@ -4,17 +4,21 @@ import com.example.lab1.component.DtoFunctionFactory;
 import com.example.lab1.controller.exception.NotFoundException;
 import com.example.lab1.student.dto.GetStudentResponse;
 import com.example.lab1.student.dto.GetStudentsResponse;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 import java.io.InputStream;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequestScoped
 public class SimpleStudentController implements StudentController{
 
     private final StudentService service;
 
     private final DtoFunctionFactory factory;
 
+    @Inject
     public SimpleStudentController(StudentService service, DtoFunctionFactory factory) {
         this.service = service;
         this.factory = factory;

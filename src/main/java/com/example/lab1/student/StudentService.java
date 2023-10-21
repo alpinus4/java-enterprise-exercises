@@ -1,5 +1,9 @@
 package com.example.lab1.student;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -9,9 +13,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class StudentService {
     private final StudentRepository repository;
 
+    @Inject
     public StudentService(StudentRepository repository) {
         this.repository = repository;
     }
