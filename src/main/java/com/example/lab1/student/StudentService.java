@@ -1,6 +1,7 @@
 package com.example.lab1.student;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 

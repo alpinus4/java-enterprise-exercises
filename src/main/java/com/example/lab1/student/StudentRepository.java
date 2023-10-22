@@ -2,14 +2,17 @@ package com.example.lab1.student;
 
 import com.example.lab1.datastore.DataStore;
 import com.example.lab1.repository.Repository;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RequestScoped
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class StudentRepository implements Repository<Student, UUID> {
 
     private DataStore store;
