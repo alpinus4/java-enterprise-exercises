@@ -1,7 +1,9 @@
 package com.example.lab1.observer;
 
 import com.example.lab1.beer.Beer;
+import com.example.lab1.beer.BeerService;
 import com.example.lab1.brewery.Brewery;
+import com.example.lab1.brewery.BreweryService;
 import com.example.lab1.student.Student;
 import com.example.lab1.student.StudentService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,11 +23,17 @@ public class InitializedData {
 
     private final StudentService studentService;
 
+    private final BeerService beerService;
+
+    private final BreweryService breweryService;
+
     private final RequestContextController requestContextController;
 
     @Inject
-    public InitializedData(StudentService studentService, RequestContextController requestContextController) {
+    public InitializedData(StudentService studentService, BeerService beerService, BreweryService breweryService, RequestContextController requestContextController) {
         this.studentService = studentService;
+        this.beerService = beerService;
+        this.breweryService = breweryService;
         this.requestContextController = requestContextController;
     }
 
@@ -35,6 +43,7 @@ public class InitializedData {
 
     @SneakyThrows
     private void init() {
+        requestContextController.activate();
         Brewery browary_lubelskie_sa = Brewery.builder().id(UUID.randomUUID()).establishmentDate(LocalDate.of(1846, 1, 1)).name("Perla browary lubelskie SA").location("Lublin").build();
 
         Beer perla_miodowa = Beer.builder().id(UUID.randomUUID()).name("Perla miodowa").brewery(browary_lubelskie_sa).type(Beer.Type.LIGHT).brewingDate(LocalDate.of(2023, 9, 9)).alcoholContent(6).build();
@@ -59,6 +68,16 @@ public class InitializedData {
         studentService.create(kuba);
         studentService.create(asia);
         studentService.create(ania);
+
+        beerService.create(perla_miodowa);
+        beerService.create(perla_chmielowa);
+        beerService.create(perla_export);
+        beerService.create(perla_mocna);
+        beerService.create(perla_bezalkoholowa);
+
+        breweryService.create(browary_lubelskie_sa);
+
+        requestContextController.deactivate();
     }
 
     /**
