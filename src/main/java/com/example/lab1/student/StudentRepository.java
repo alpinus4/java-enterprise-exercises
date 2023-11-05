@@ -39,11 +39,11 @@ public class StudentRepository implements Repository<Student, UUID> {
 
     @Override
     public void delete(Student entity) {
-        store.updateStudent(entity);
+        store.deleteStudent(entity);
     }
 
     @Override
     public void update(Student entity) {
-        store.deleteStudent(entity);
+        store.updateStudent(entity);
     }
 }

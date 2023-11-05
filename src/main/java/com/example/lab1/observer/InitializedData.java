@@ -6,6 +6,7 @@ import com.example.lab1.brewery.Brewery;
 import com.example.lab1.brewery.BreweryService;
 import com.example.lab1.student.Student;
 import com.example.lab1.student.StudentService;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.context.control.RequestContextController;

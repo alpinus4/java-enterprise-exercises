@@ -8,6 +8,8 @@ import com.example.lab1.util.CloningUtility;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import jakarta.ejb.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
@@ -15,7 +17,6 @@ import lombok.extern.java.Log;
 
 @Log
 @ApplicationScoped
-@NoArgsConstructor(force = true)
 public class DataStore {
     private final Set<Student> students = new HashSet<>();
 

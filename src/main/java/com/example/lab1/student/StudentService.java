@@ -1,7 +1,7 @@
 package com.example.lab1.student;
 
+import com.example.lab1.controller.exception.NotFoundException;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +34,15 @@ public class StudentService {
 
     public void create(Student entity) {
         repository.create(entity);
+    }
+
+    public void delete(UUID id) {
+        var student = repository.find(id);
+        if (student.isPresent()) {
+            repository.delete(student.get());
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     public void putAvatar(UUID id, InputStream stream) {
