@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <article class="text--justified">
+            <header><h2>Students</h2></header>
+
+            <h:dataTable value="#{studentList.students.students}" var="student"
+                         styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+                <h:column>
+                    <f:facet name="header">Avatar</f:facet>
+                    <h:graphicImage styleClass="student-avatar rounded-circle" alt="Student avatar"
+                                    value="/api/students/#{student.id}/avatar"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{student.name}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Surname</f:facet>
+                    <h:outputText value="#{student.surname}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">View</f:facet>
+                    <h:link outcome="/student/student_view.xhtml" value="View">
+                        <f:param name="id" value="#{student.id}"/>
+                    </h:link>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Edit</f:facet>
+                    <h:link outcome="/student/student_edit.xhtml" value="Edit">
+                        <f:param name="id" value="#{student.id}"/>
+                    </h:link>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Delete</f:facet>
+                    <h:form>
+                        <h:commandButton styleClass="btn" value="Delete"
+                                         action="#{studentList.deleteAction(student)}"/>
+                    </h:form>
+                </h:column>
+
+                <f:facet name="footer">
+                    <h:button styleClass="btn" outcome="/student/student_create.xhtml"
+                              value="Create new student"/>
+                </f:facet>
+            </h:dataTable>
+        </article>
+    </ui:define>
+
+</ui:composition>

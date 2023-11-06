@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{breweryView.id}" required="true"/>
+        <f:viewAction action="#{breweryView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2><h:outputText value="#{breweryView.brewery.name}"/></h2></header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                Establishment date
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{breweryView.brewery.establishmentDate}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                Location
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{breweryView.brewery.location}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <b>Beers</b>
+                                <h:dataTable value="#{breweryView.brewery.beers}" var="beer"
+                                             styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        <h:outputText value="#{beer.name}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Alcohol content</f:facet>
+                                        <h:outputText value="#{beer.alcoholContent}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">View</f:facet>
+                                        <h:link outcome="/beer/beer_view.xhtml" value="View">
+                                            <f:param name="id" value="#{beer.id}"/>
+                                        </h:link>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Edit</f:facet>
+                                        <h:link outcome="/beer/beer_edit.xhtml" value="Edit">
+                                            <f:param name="id" value="#{beer.id}"/>
+                                        </h:link>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Delete</f:facet>
+                                        <h:form>
+                                            <h:commandButton styleClass="btn" value="Delete"
+                                                             action="#{breweryView.deleteBeerAction(beer)}"/>
+                                        </h:form>
+                                    </h:column>
+
+                                    <f:facet name="footer">
+                                        <h:link styleClass="btn" outcome="/beer/beer_create.xhtml"
+                                                  value="Create new beer">
+                                            <f:param name="breweryid" value="#{breweryView.id}"/>
+                                        </h:link>
+                                    </f:facet>
+
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </ui:define>
+
+</ui:composition>
