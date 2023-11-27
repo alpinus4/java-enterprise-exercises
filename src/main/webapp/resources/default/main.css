@@ -1,0 +1,11 @@
+.student-avatar {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    object-position: 0 0;
+}
+
+.beer-icon {
+    width: 40px;
+    height: auto;
+}

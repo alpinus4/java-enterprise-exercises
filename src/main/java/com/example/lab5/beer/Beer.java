@@ -1,0 +1,47 @@
+package com.example.lab5.beer;
+
+import com.example.lab5.brewery.Brewery;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.UUID;
+
+@Getter
+@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
+@EqualsAndHashCode
+@Entity
+@Table(name = "beers")
+public class Beer implements Serializable {
+    public enum Type {
+        LIGHT, DARK;
+    }
+
+    @Id
+    private UUID id;
+    private String name;
+
+    @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JoinColumn(name = "brewery_id")
+    private Brewery brewery;
+
+    private Type type;
+
+    private LocalDate brewingDate;
+
+    private float alcoholContent;
+}

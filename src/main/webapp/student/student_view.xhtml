@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{studentView.id}" required="true"/>
+        <f:viewAction action="#{studentView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2><h:outputText value="#{studentView.studentModel.name}"/></h2></header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                Birthdate
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{studentView.studentModel.birthDate}"/>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <b>Drunken beers</b>
+                                <h:dataTable value="#{studentView.studentModel.drunkenBeers}" var="beer"
+                                             styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        <h:outputText value="#{beer.name}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Alcohol content</f:facet>
+                                        <h:outputText value="#{beer.alcoholContent}"/>
+                                    </h:column>
+
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <h:graphicImage alt="Student avatar" styleClass="w-100"
+                                        value="/api/students/#{studentView.id}/avatar"/>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </ui:define>
+
+</ui:composition>
