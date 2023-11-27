@@ -1,6 +1,7 @@
 package com.example.lab5.beer;
 
 import com.example.lab5.brewery.Brewery;
+import com.example.lab5.student.Student;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -38,6 +39,12 @@ public class Beer implements Serializable {
     @EqualsAndHashCode.Exclude
     @JoinColumn(name = "brewery_id")
     private Brewery brewery;
+
+    @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     private Type type;
 

@@ -38,7 +38,9 @@ public class Student implements Serializable {
 
     private LocalDate birthDate;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @ToString.Exclude//It's common to exclude lists from toString
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Beer> drunkenBeers;
 
     @Lob

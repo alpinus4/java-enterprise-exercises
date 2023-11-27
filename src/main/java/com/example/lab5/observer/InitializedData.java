@@ -47,6 +47,38 @@ public class InitializedData {
 
         if (breweryService.findAll().isEmpty()) {
 
+            Student janek = Student.builder()
+            .id(UUID.fromString("a4727e51-37fd-48a9-89c4-c71fcad03f66"))
+            .name("Jan")
+            .surname("Piwny")
+            .birthDate(LocalDate.of(1997, 10, 21))
+            .build();
+
+            Student kuba = Student.builder()
+            .id(UUID.fromString("4cb14aab-1cf6-44c9-8ee8-dfd96576c5e2"))
+            .name("Kuba").surname("Mocny")
+            .birthDate(LocalDate.of(1998, 11, 11))
+            .build();
+
+            Student asia = Student.builder()
+            .id(UUID.fromString("2fabeeb8-30d9-40e8-b447-b266438f2329"))
+            .name("Joanna").surname("Kowalska")
+            .birthDate(LocalDate.of(1999, 9, 9))
+            .build();
+
+            Student ania = Student.builder()
+            .id(UUID.fromString("26ce434b-1201-4564-a3a1-a4089eebf000"))
+            .name("Anna")
+            .surname("Kowalska")
+            .birthDate(LocalDate.of(1999, 9, 9))
+            .build();
+
+            studentService.create(janek);
+            studentService.create(kuba);
+            studentService.create(asia);
+            studentService.create(ania);
+
+
             Brewery browary_lubelskie_sa = Brewery.builder()
             .id(UUID.fromString("140c99cd-61fc-49b5-b57a-1bf4b141e9f3"))
             .establishmentDate(LocalDate.of(1846, 1, 1))
@@ -62,6 +94,7 @@ public class InitializedData {
             .name("Perla miodowa")
             .brewery(browary_lubelskie_sa)
             .type(Beer.Type.LIGHT)
+            .student(janek)
             .brewingDate(LocalDate.of(2023, 9, 9))
             .alcoholContent(6)
             .build();
@@ -71,6 +104,7 @@ public class InitializedData {
             .name("Perla chmielowa")
             .brewery(browary_lubelskie_sa)
             .type(Beer.Type.LIGHT)
+            .student(kuba)
             .brewingDate(LocalDate.of(2023, 9, 10))
             .alcoholContent(6)
             .build();
@@ -80,6 +114,7 @@ public class InitializedData {
             .name("Perla Export")
             .brewery(browary_lubelskie_sa)
             .type(Beer.Type.LIGHT)
+            .student(ania)
             .brewingDate(LocalDate.of(2023, 9, 10))
             .alcoholContent(5.2F)
             .build();
@@ -89,6 +124,7 @@ public class InitializedData {
             .name("Perla Mocna")
             .brewery(browary_lubelskie_sa)
             .type(Beer.Type.LIGHT)
+            .student(kuba)
             .brewingDate(LocalDate.of(2023, 9, 10))
             .alcoholContent(7.1F)
             .build();
@@ -98,6 +134,7 @@ public class InitializedData {
             .name("Perla Bezalkoholowa")
             .brewery(browary_lubelskie_sa)
             .type(Beer.Type.LIGHT)
+            .student(asia)
             .brewingDate(LocalDate.of(2023, 9, 10))
             .alcoholContent(0F)
             .build();
@@ -108,40 +145,6 @@ public class InitializedData {
             beerService.create(perla_mocna);
             beerService.create(perla_bezalkoholowa);
 
-            // Student janek = Student.builder()
-            // .id(UUID.fromString("a4727e51-37fd-48a9-89c4-c71fcad03f66"))
-            // .name("Jan")
-            // .surname("Piwny")
-            // .birthDate(LocalDate.of(1997, 10, 21))
-            // .drunkenBeers(List.of(perla_miodowa))
-            // .build();
-
-            // Student kuba = Student.builder()
-            // .id(UUID.fromString("4cb14aab-1cf6-44c9-8ee8-dfd96576c5e2"))
-            // .name("Kuba").surname("Mocny")
-            // .birthDate(LocalDate.of(1998, 11, 11))
-            // .drunkenBeers(List.of(perla_mocna, perla_export, perla_miodowa, perla_chmielowa))
-            // .build();
-
-            // Student asia = Student.builder()
-            // .id(UUID.fromString("2fabeeb8-30d9-40e8-b447-b266438f2329"))
-            // .name("Joanna").surname("Kowalska")
-            // .birthDate(LocalDate.of(1999, 9, 9))
-            // .drunkenBeers(List.of(perla_bezalkoholowa))
-            // .build();
-
-            // Student ania = Student.builder()
-            // .id(UUID.fromString("26ce434b-1201-4564-a3a1-a4089eebf000"))
-            // .name("Anna")
-            // .surname("Kowalska")
-            // .birthDate(LocalDate.of(1999, 9, 9))
-            // .drunkenBeers(List.of(perla_bezalkoholowa, perla_miodowa))
-            // .build();
-
-            // studentService.create(janek);
-            // studentService.create(kuba);
-            // studentService.create(asia);
-            // studentService.create(ania);
 
             Brewery tyskie_browary_ksiazece = Brewery.builder()
             .id(UUID.fromString("15b800d3-ac4b-4546-89f9-4654a50adb42"))
