@@ -25,13 +25,13 @@ public class StudentRepository implements Repository<Student, UUID> {
     }
 
     @Override
-    @Transactional
+    
     public Optional<Student> find(UUID id) {
         return Optional.ofNullable(em.find(Student.class, id));
     }
 
     @Override
-    @Transactional
+    
     public List<Student> findAll() {
         return em.createQuery("select s from Student s", Student.class).getResultList();
     }
@@ -47,19 +47,19 @@ public class StudentRepository implements Repository<Student, UUID> {
     }
 
     @Override
-    @Transactional
+    
     public void create(Student entity) {
         em.persist(entity);
     }
 
     @Override
-    @Transactional
+    
     public void delete(Student entity) {
         em.remove(em.find(Student.class, entity.getId()));
     }
 
     @Override
-    @Transactional
+    
     public void update(Student entity) {
         em.merge(entity);
     }

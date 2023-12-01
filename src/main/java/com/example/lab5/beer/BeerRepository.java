@@ -24,31 +24,31 @@ public class BeerRepository implements Repository<Beer, UUID> {
     }
 
     @Override
-    @Transactional
+    
     public Optional<Beer> find(UUID id) {
         return Optional.ofNullable(em.find(Beer.class, id));
     }
 
     @Override
-    @Transactional
+    
     public List<Beer> findAll() {
         return em.createQuery("select b from Beer b", Beer.class).getResultList();
     }
 
     @Override
-    @Transactional
+    
     public void create(Beer entity) {
         em.persist(entity);
     }
 
     @Override
-    @Transactional
+    
     public void delete(Beer entity) {
         em.remove(em.find(Beer.class, entity.getId()));
     }
 
     @Override
-    @Transactional
+    
     public void update(Beer entity) {
         em.merge(entity);
     }
