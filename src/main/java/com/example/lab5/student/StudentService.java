@@ -4,6 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class StudentService {
     private final StudentRepository repository;

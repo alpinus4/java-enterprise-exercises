@@ -1,11 +1,15 @@
 package com.example.lab5.brewery.controller;
 
+import com.example.lab5.beer.BeerService;
 import com.example.lab5.brewery.BreweryService;
 import com.example.lab5.brewery.dto.GetBreweriesResponse;
 import com.example.lab5.brewery.dto.GetBreweryResponse;
 import com.example.lab5.brewery.dto.PatchBreweryRequest;
 import com.example.lab5.brewery.dto.PostBreweryRequest;
 import com.example.lab5.component.DtoFunctionFactory;
+
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,16 +18,19 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
-@Singleton
+@Log
 @Path("/breweries")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BreweryRestController implements BreweryController {
 
-    private final BreweryService breweryService;
+    private BreweryService breweryService;
 
     private final DtoFunctionFactory dtoFunctionFactory;
 
@@ -37,10 +44,14 @@ public class BreweryRestController implements BreweryController {
     }
 
     @Inject
-    public BreweryRestController(BreweryService breweryService, DtoFunctionFactory dtoFunctionFactory, UriInfo uriInfo) {
-        this.breweryService = breweryService;
+    public BreweryRestController(DtoFunctionFactory dtoFunctionFactory, UriInfo uriInfo) {
         this.dtoFunctionFactory = dtoFunctionFactory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setBreweryService(BreweryService breweryService) {
+        this.breweryService = breweryService;
     }
 
     @GET
@@ -64,8 +75,13 @@ public class BreweryRestController implements BreweryController {
             var id = UUID.randomUUID();
             breweryService.create(dtoFunctionFactory.requestToBrewery().apply(id, request));
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex);
+        } catch (EJBException ex) {
+            //Any unchecked exception is packed into EJBException. Business exception can be itroduced here.
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 

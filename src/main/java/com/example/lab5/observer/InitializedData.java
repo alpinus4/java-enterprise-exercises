@@ -12,38 +12,46 @@ import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import lombok.SneakyThrows;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.*;
+import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+@NoArgsConstructor
 public class InitializedData {
 
-    private final StudentService studentService;
+    private StudentService studentService;
 
-    private final BeerService beerService;
+    private BeerService beerService;
 
-    private final BreweryService breweryService;
+    private BreweryService breweryService;
 
-    private final RequestContextController requestContextController;
-
-    @Inject
-    public InitializedData(StudentService studentService, BeerService beerService, BreweryService breweryService, RequestContextController requestContextController) {
+    @EJB
+    public void setStudentService(StudentService studentService) {
         this.studentService = studentService;
+    }
+
+    @EJB
+    public void setBeerService(BeerService beerService) {
         this.beerService = beerService;
+    }
+
+    @EJB
+    public void setBreweryService(BreweryService breweryService) {
         this.breweryService = breweryService;
-        this.requestContextController = requestContextController;
     }
 
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
-    }
-
+    @PostConstruct
     @SneakyThrows
     private void init() {
-        requestContextController.activate();
 
         if (breweryService.findAll().isEmpty()) {
 
@@ -166,8 +174,6 @@ public class InitializedData {
 
             beerService.create(tyskie_gronie);
         }
-
-        requestContextController.deactivate();
     }
 
     /**

@@ -4,6 +4,8 @@ import com.example.lab5.component.ModelFunctionFactory;
 import com.example.lab5.student.Student;
 import com.example.lab5.student.StudentService;
 import com.example.lab5.student.model.StudentModel;
+
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -20,7 +22,7 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class StudentView implements Serializable {
-    private final StudentService studentService;
+    private StudentService studentService;
 
     private final ModelFunctionFactory modelFunctionFactory;
 
@@ -33,9 +35,13 @@ public class StudentView implements Serializable {
 
 
     @Inject
-    public StudentView(StudentService studentService, ModelFunctionFactory modelFunctionFactory) {
-        this.studentService = studentService;
+    public StudentView(ModelFunctionFactory modelFunctionFactory) {
         this.modelFunctionFactory = modelFunctionFactory;
+    }
+
+    @EJB
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     public void init() throws IOException {

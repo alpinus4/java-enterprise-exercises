@@ -3,6 +3,8 @@ package com.example.lab5.student.view;
 import com.example.lab5.component.ModelFunctionFactory;
 import com.example.lab5.student.StudentService;
 import com.example.lab5.student.model.StudentCreateModel;
+
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Inject;
@@ -21,7 +23,7 @@ import java.util.UUID;
 @Log
 @NoArgsConstructor(force = true)
 public class StudentCreate implements Serializable {
-    private final StudentService studentService;
+    private StudentService studentService;
 
     private final ModelFunctionFactory modelFunctionFactory;
 
@@ -31,10 +33,14 @@ public class StudentCreate implements Serializable {
     private final Conversation conversation;
 
     @Inject
-    public StudentCreate(StudentService studentService, ModelFunctionFactory modelFunctionFactory, Conversation conversation) {
-        this.studentService = studentService;
+    public StudentCreate(ModelFunctionFactory modelFunctionFactory, Conversation conversation) {
         this.modelFunctionFactory = modelFunctionFactory;
         this.conversation = conversation;
+    }
+
+    @EJB
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     public void init() {

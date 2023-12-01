@@ -7,6 +7,8 @@ import com.example.lab5.brewery.Brewery;
 import com.example.lab5.brewery.BreweryService;
 import com.example.lab5.brewery.model.BreweryEditModel;
 import com.example.lab5.component.ModelFunctionFactory;
+
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -25,9 +27,9 @@ import java.util.UUID;
 @Named
 public class BeerEdit implements Serializable {
 
-    private final BeerService beerService;
+    private BeerService beerService;
 
-    private final BreweryService breweryService;
+    private BreweryService breweryService;
 
     private final ModelFunctionFactory modelFunctionFactory;
 
@@ -45,10 +47,18 @@ public class BeerEdit implements Serializable {
         return Beer.Type.values();
     }
 
-    @Inject
-    public BeerEdit(BeerService beerService, BreweryService breweryService, ModelFunctionFactory modelFunctionFactory) {
+    @EJB
+    public void setBeerService(BeerService beerService) {
         this.beerService = beerService;
+    }
+
+    @EJB
+    public void setBreweryService(BreweryService breweryService) {
         this.breweryService = breweryService;
+    }
+
+    @Inject
+    public BeerEdit(ModelFunctionFactory modelFunctionFactory) {
         this.modelFunctionFactory = modelFunctionFactory;
     }
 

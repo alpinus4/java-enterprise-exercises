@@ -10,6 +10,8 @@ import com.example.lab5.student.dto.GetStudentResponse;
 import com.example.lab5.student.dto.GetStudentsResponse;
 import com.example.lab5.student.dto.PostStudentRequest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.ejb.Singleton;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,21 +20,28 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
+import java.util.logging.Level;
 
-@Singleton
+@Log
 @Path("/students")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class StudentRestController implements StudentController {
 
-    private final StudentService studentService;
+    private StudentService studentService;
 
     private final DtoFunctionFactory dtoFunctionFactory;
 
     @Inject
-    public StudentRestController(StudentService studentService, DtoFunctionFactory dtoFunctionFactory) {
-        this.studentService = studentService;
+    public StudentRestController(DtoFunctionFactory dtoFunctionFactory) {
         this.dtoFunctionFactory = dtoFunctionFactory;
+    }
+
+    @EJB
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
     }
 
 
@@ -56,8 +65,13 @@ public class StudentRestController implements StudentController {
             var id = UUID.randomUUID();
             studentService.create(dtoFunctionFactory.requestToStudent().apply(id, request));
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex);
+        } catch (EJBException ex) {
+            //Any unchecked exception is packed into EJBException. Business exception can be itroduced here.
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.lab5.beer;
 
 import com.example.lab5.repository.Repository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@Dependent
 @NoArgsConstructor(force = true)
 public class BeerRepository implements Repository<Beer, UUID> {
 
