@@ -60,18 +60,24 @@ public class InitializedData {
             .name("Jan")
             .surname("Piwny")
             .birthDate(LocalDate.of(1997, 10, 21))
+            .login("janpiw")
+            .password("abc")
             .build();
 
             Student kuba = Student.builder()
             .id(UUID.fromString("4cb14aab-1cf6-44c9-8ee8-dfd96576c5e2"))
             .name("Kuba").surname("Mocny")
             .birthDate(LocalDate.of(1998, 11, 11))
+            .login("kubus")
+            .password("abc")
             .build();
 
             Student asia = Student.builder()
             .id(UUID.fromString("2fabeeb8-30d9-40e8-b447-b266438f2329"))
             .name("Joanna").surname("Kowalska")
             .birthDate(LocalDate.of(1999, 9, 9))
+            .login("joa44")
+            .password("abc")
             .build();
 
             Student ania = Student.builder()
@@ -79,6 +85,8 @@ public class InitializedData {
             .name("Anna")
             .surname("Kowalska")
             .birthDate(LocalDate.of(1999, 9, 9))
+            .login("kowiu")
+            .password("abc")
             .build();
 
             studentService.create(janek);

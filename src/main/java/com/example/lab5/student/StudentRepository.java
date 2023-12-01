@@ -4,6 +4,7 @@ import com.example.lab5.repository.Repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,16 @@ public class StudentRepository implements Repository<Student, UUID> {
     @Transactional
     public List<Student> findAll() {
         return em.createQuery("select s from Student s", Student.class).getResultList();
+    }
+
+    public Optional<Student> findByLogin(String login) {
+        try {
+            return Optional.of(em.createQuery("select u from Student u where u.login = :login", Student.class)
+                    .setParameter("login", login)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override

@@ -12,6 +12,7 @@ public class StudentToResponseFunction implements Function<Student, GetStudentRe
     public GetStudentResponse apply(Student entity) {
         return GetStudentResponse.builder()
                 .id(entity.getId())
+                .login(entity.getLogin())
                 .name(entity.getName())
                 .surname(entity.getSurname())
                 .birthDate(entity.getBirthDate())

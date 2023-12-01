@@ -17,6 +17,8 @@ public class RequestToStudentFunction implements BiFunction<UUID, PostStudentReq
                 .surname(request.getSurname())
                 .birthDate(request.getBirthDate())
                 .drunkenBeers(new ArrayList<>())
+                .login(request.getLogin())
+                .password(request.getPassword())
                 .avatar(null)
                 .build();
     }

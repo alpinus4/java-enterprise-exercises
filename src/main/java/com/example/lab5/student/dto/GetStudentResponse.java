@@ -36,6 +36,8 @@ public class GetStudentResponse {
 
     private String surname;
 
+    private String login;
+
     private LocalDate birthDate;
 
     private List<Beer> drunkenBeers;

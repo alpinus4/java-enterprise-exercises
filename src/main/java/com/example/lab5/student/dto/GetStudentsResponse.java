@@ -25,7 +25,7 @@ public class GetStudentsResponse {
 
         private UUID id;
 
-        private String name;
+        private String login;
 
     }
 

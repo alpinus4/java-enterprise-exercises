@@ -6,6 +6,7 @@ import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,13 +23,20 @@ import java.util.UUID;
 public class StudentService {
     private final StudentRepository repository;
 
+    private final Pbkdf2PasswordHash passwordHash;
+
     @Inject
-    public StudentService(StudentRepository repository) {
+    public StudentService(StudentRepository repository, @SuppressWarnings("CdiInjectionPointsInspection") Pbkdf2PasswordHash passwordHash) {
         this.repository = repository;
+        this.passwordHash = passwordHash;
     }
 
     public Optional<Student> find(UUID id) {
         return repository.find(id);
+    }
+
+    public Optional<Student> find(String login) {
+        return repository.findByLogin(login);
     }
 
     public List<Student> findAll() {
@@ -36,7 +44,14 @@ public class StudentService {
     }
 
     public void create(Student entity) {
+        entity.setPassword(passwordHash.generate(entity.getPassword().toCharArray()));
         repository.create(entity);
+    }
+
+    public boolean verify(String login, String password) {
+        return find(login)
+                .map(user -> passwordHash.verify(password.toCharArray(), user.getPassword()))
+                .orElse(false);
     }
 
     public void update(Student entity) {

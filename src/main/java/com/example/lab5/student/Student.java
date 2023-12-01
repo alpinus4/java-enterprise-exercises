@@ -4,6 +4,7 @@ import com.example.lab5.beer.Beer;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -35,6 +36,12 @@ public class Student implements Serializable {
     private String name;
 
     private String surname;
+
+    @Column(unique = true)
+    private String login;
+
+    @ToString.Exclude
+    private String password;
 
     private LocalDate birthDate;
 

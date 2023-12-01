@@ -21,6 +21,10 @@ public class PostStudentRequest implements Serializable {
 
     private String surname;
 
+    private String login;
+
+    private String password;
+
     private LocalDate birthDate;
     
 }

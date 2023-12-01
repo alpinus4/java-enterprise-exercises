@@ -12,7 +12,7 @@ public class StudentsToResponseFunction implements Function<List<Student>, GetSt
     @Override
     public GetStudentsResponse apply(List<Student> entities) {
         return GetStudentsResponse.builder()
-                .students(entities.stream().map(student -> GetStudentsResponse.Student.builder().id(student.getId()).name(student.getName()).build()).collect(Collectors.toList()))
+                .students(entities.stream().map(student -> GetStudentsResponse.Student.builder().id(student.getId()).login(student.getLogin()).build()).collect(Collectors.toList()))
                 .build();
     }
 
