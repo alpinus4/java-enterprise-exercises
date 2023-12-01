@@ -8,6 +8,7 @@ import com.example.lab5.brewery.dto.function.BreweriesToResponseFunction;
 import com.example.lab5.brewery.dto.function.BreweryToResponseFunction;
 import com.example.lab5.brewery.dto.function.RequestToBreweryFunction;
 import com.example.lab5.brewery.dto.function.UpdateBreweryWithRequestFunction;
+import com.example.lab5.student.dto.function.RequestToStudentFunction;
 import com.example.lab5.student.dto.function.StudentToResponseFunction;
 import com.example.lab5.student.dto.function.StudentsToResponseFunction;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,6 +22,10 @@ public class DtoFunctionFactory {
 
     public StudentsToResponseFunction studentsToResponse(){
         return new StudentsToResponseFunction();
+    }
+
+    public RequestToStudentFunction requestToStudent(){
+        return new RequestToStudentFunction();
     }
 
     public BreweryToResponseFunction breweryToResponse(){
