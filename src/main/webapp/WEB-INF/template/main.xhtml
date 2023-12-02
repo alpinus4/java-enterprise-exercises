@@ -26,6 +26,12 @@
                 <h1>Students drinking beer</h1>
                 <h:graphicImage styleClass="beer-icon rounded-circle" alt="beer icon"
                                 value="/resources/cartoon-beer-icon-png.png"/>
+                <h:form styleClass="container d-flex  align-items-center justify-content-end"
+                        rendered="#{facesContext.externalContext.userPrincipal != null}">
+                    Logged: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
+                    <h:commandButton styleClass="btn btn-link" value="Logout"
+                                        action="#{studentLogout.logoutAction()}"/>
+                </h:form>
             </header>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -34,10 +40,12 @@
                         <li class="nav-item">
                             <h:link styleClass="nav-link" outcome="/index.xhtml">Home</h:link>
                         </li>
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link"
-                                    outcome="/student/student_list.xhtml">Students</h:link>
-                        </li>
+                        <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link"
+                                        outcome="/student/student_list.xhtml">Students</h:link>
+                            </li>
+                        </h:panelGroup>
 
                         <li class="nav-item">
                             <h:link styleClass="nav-link"

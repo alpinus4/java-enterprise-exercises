@@ -55,7 +55,7 @@ public class BreweryView implements Serializable {
     public void init() throws IOException {
         Optional<Brewery> brewery = breweryService.find(id);
         if (brewery.isPresent()) {
-            this.brewery = modelFunctionFactory.breweryToModel().apply(brewery.get(), beerService.findAll());
+            this.brewery = modelFunctionFactory.breweryToModel().apply(brewery.get(), beerService.findAllByBreweryForCallerPrincipal(brewery.get().getId()));
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Brewery not found");
         }
