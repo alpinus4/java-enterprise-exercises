@@ -4,10 +4,13 @@ import com.example.lab5.beer.Beer;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -49,6 +52,11 @@ public class Student implements Serializable {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Beer> drunkenBeers;
+
+    @CollectionTable(name = "users__roles", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     @Lob
     @Basic(fetch = FetchType.EAGER)

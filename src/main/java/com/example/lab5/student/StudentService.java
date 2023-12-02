@@ -4,6 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
@@ -31,23 +33,28 @@ public class StudentService {
         this.passwordHash = passwordHash;
     }
 
+    @RolesAllowed(StudentRoles.ADMIN)
     public Optional<Student> find(UUID id) {
         return repository.find(id);
     }
 
+    @RolesAllowed(StudentRoles.ADMIN)
     public Optional<Student> find(String login) {
         return repository.findByLogin(login);
     }
 
+    @RolesAllowed(StudentRoles.ADMIN)
     public List<Student> findAll() {
         return repository.findAll();
     }
 
+    @PermitAll
     public void create(Student entity) {
         entity.setPassword(passwordHash.generate(entity.getPassword().toCharArray()));
         repository.create(entity);
     }
 
+    @PermitAll
     public boolean verify(String login, String password) {
         return find(login)
                 .map(user -> passwordHash.verify(password.toCharArray(), user.getPassword()))
@@ -58,6 +65,7 @@ public class StudentService {
         repository.update(entity);
     }
 
+    @RolesAllowed(StudentRoles.ADMIN)
     public void delete(UUID id) {
         var student = repository.find(id);
         if (student.isPresent()) {

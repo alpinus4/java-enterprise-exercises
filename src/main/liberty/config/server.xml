@@ -12,6 +12,18 @@
         <feature>appSecurity-5.0</feature>
     </featureManager>
 
+    <application type="war" location="lab1-1.0-SNAPSHOT.war">
+        <application-bnd>
+            <security-role name="admin">
+                <group name="admin" access-id="group:jdbc/Beer/admin"/>
+                <run-as userid="admin-service"/>
+            </security-role>
+            <security-role name="user">
+                <group name="user" access-id="group:jdbc/Beer/user"/>
+            </security-role>
+        </application-bnd>
+    </application>
+
     <dataSource id="SimpleRpgCharactersDataSource" jndiName="jdbc/Beer">
         <jdbcDriver javax.sql.XADataSource="org.h2.jdbcx.JdbcDataSource"
                     javax.sql.ConnectionPoolDataSource="org.h2.jdbcx.JdbcDataSource"

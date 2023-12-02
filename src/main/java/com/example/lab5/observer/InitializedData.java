@@ -5,6 +5,7 @@ import com.example.lab5.beer.BeerService;
 import com.example.lab5.brewery.Brewery;
 import com.example.lab5.brewery.BreweryService;
 import com.example.lab5.student.Student;
+import com.example.lab5.student.StudentRoles;
 import com.example.lab5.student.StudentService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
@@ -12,7 +13,11 @@ import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RunAs;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.ejb.*;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,6 +31,10 @@ import java.util.UUID;
 @Startup
 @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
 @NoArgsConstructor
+@DependsOn("InitializedAdminService")
+@DeclareRoles({StudentRoles.ADMIN, StudentRoles.USER})
+@RunAs(StudentRoles.ADMIN)
+@Log
 public class InitializedData {
 
     private StudentService studentService;
@@ -33,6 +42,9 @@ public class InitializedData {
     private BeerService beerService;
 
     private BreweryService breweryService;
+
+    @Inject
+    private SecurityContext securityContext;
 
     @EJB
     public void setStudentService(StudentService studentService) {
@@ -62,6 +74,7 @@ public class InitializedData {
             .birthDate(LocalDate.of(1997, 10, 21))
             .login("janpiw")
             .password("abc")
+            .roles(List.of(StudentRoles.USER))
             .build();
 
             Student kuba = Student.builder()
@@ -70,6 +83,7 @@ public class InitializedData {
             .birthDate(LocalDate.of(1998, 11, 11))
             .login("kubus")
             .password("abc")
+            .roles(List.of(StudentRoles.USER))
             .build();
 
             Student asia = Student.builder()
@@ -78,6 +92,7 @@ public class InitializedData {
             .birthDate(LocalDate.of(1999, 9, 9))
             .login("joa44")
             .password("abc")
+            .roles(List.of(StudentRoles.USER))
             .build();
 
             Student ania = Student.builder()
@@ -87,6 +102,7 @@ public class InitializedData {
             .birthDate(LocalDate.of(1999, 9, 9))
             .login("kowiu")
             .password("abc")
+            .roles(List.of(StudentRoles.USER))
             .build();
 
             studentService.create(janek);

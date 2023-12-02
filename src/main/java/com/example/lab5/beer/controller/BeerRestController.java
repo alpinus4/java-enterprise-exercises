@@ -64,7 +64,7 @@ public class BeerRestController implements BeerController{
     @Override
     public GetBeersResponse getBeers(@PathParam("breweryid") UUID breweryid) {
         breweryService.find(breweryid).orElseThrow(NotFoundException::new);
-        return dtoFunctionFactory.beersToResponse().apply(beerService.findAll().stream().filter(beer -> beer.getBrewery().getId().equals(breweryid)).toList());
+        return dtoFunctionFactory.beersToResponse().apply(beerService.findAllForCallerPrincipal().stream().filter(beer -> beer.getBrewery().getId().equals(breweryid)).toList());
     }
 
     @GET
@@ -72,7 +72,7 @@ public class BeerRestController implements BeerController{
     @Override
     public GetBeerResponse getBeer(@PathParam("breweryid") UUID breweryid, @PathParam("id") UUID id) {
         breweryService.find(breweryid).orElseThrow(NotFoundException::new);
-        return dtoFunctionFactory.beerToResponse().apply(beerService.find(id).orElseThrow(NotFoundException::new));
+        return dtoFunctionFactory.beerToResponse().apply(beerService.findForCallerPrincipal(id).orElseThrow(NotFoundException::new));
     }
 
     @POST
@@ -81,7 +81,7 @@ public class BeerRestController implements BeerController{
         try {
             var id = UUID.randomUUID();
             var brewery = breweryService.find(breweryid).orElseThrow(NotFoundException::new);
-            beerService.create(dtoFunctionFactory.requestToBeer().apply(id, request, brewery));
+            beerService.createForCallerPrincipal(dtoFunctionFactory.requestToBeer().apply(id, request, brewery));
             throw new WebApplicationException(Response.Status.CREATED);
         } catch (EJBException ex) {
             //Any unchecked exception is packed into EJBException. Business exception can be itroduced here.
