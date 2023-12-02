@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.example.lab5.beer.interceptor.LogMethodCall;
 import com.example.lab5.brewery.Brewery;
 import com.example.lab5.brewery.BreweryRepository;
 import com.example.lab5.student.Student;
@@ -111,6 +112,7 @@ public class BeerService {
     }
 
     @RolesAllowed(StudentRoles.USER)
+    @LogMethodCall
     public void createForCallerPrincipal(Beer beer) {
         if (beerRepository.find(beer.getId()).isPresent()) {
             throw new BadRequestException("Beer with id: " + beer.getId() + " already exists!");
@@ -125,17 +127,20 @@ public class BeerService {
     }
 
     @RolesAllowed(StudentRoles.ADMIN)
+    @LogMethodCall
     public void create(Beer entity) {
         beerRepository.create(entity);
     }
 
     @RolesAllowed(StudentRoles.USER)
+    @LogMethodCall
     public void update(Beer entity) {
         checkAdminRoleOrOwner(beerRepository.find(entity.getId()));
         beerRepository.update(entity);
     }
 
     @RolesAllowed(StudentRoles.USER)
+    @LogMethodCall
     public void delete(UUID id) {
         checkAdminRoleOrOwner(beerRepository.find(id));
         var beer = beerRepository.find(id);
