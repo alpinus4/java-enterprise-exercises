@@ -17,6 +17,7 @@ public class BeerToResponseFunction implements Function<Beer, GetBeerResponse> {
                 .name(beer.getName())
                 .alcoholContent(beer.getAlcoholContent())
                 .type(beer.getType())
+                .version(beer.getVersion())
                 .build();
     }
 }

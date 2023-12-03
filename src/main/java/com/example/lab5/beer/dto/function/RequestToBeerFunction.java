@@ -20,6 +20,7 @@ public class RequestToBeerFunction implements Function3<UUID, PostBeerRequest, B
                 .alcoholContent(request.getAlcoholContent())
                 .type(request.getType())
                 .brewery(brewery)
+                .version(request.getVersion())
                 .build();
     }
 }

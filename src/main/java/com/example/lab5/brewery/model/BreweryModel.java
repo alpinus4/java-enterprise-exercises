@@ -36,6 +36,8 @@ public class BreweryModel {
 
         private String name;
 
+        private Long version;
+
         private float alcoholContent;
 
     }

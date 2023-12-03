@@ -20,6 +20,7 @@ public class UpdateBeerWithRequestFunction implements Function2<Beer, PatchBeerR
                 .alcoholContent(request.getAlcoholContent())
                 .type(request.getType())
                 .brewery(beer.getBrewery())
+                .version(request.getVersion())
                 .build();
     }
 }

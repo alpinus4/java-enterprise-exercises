@@ -5,6 +5,7 @@ import com.example.lab5.brewery.Brewery;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -29,4 +30,11 @@ public class BeerModel {
     private LocalDate brewingDate;
 
     private float alcoholContent;
+
+    private Long version;
+
+    private LocalDateTime createdAtDateTime;
+
+    private LocalDateTime updatedAtDateTime;
+
 }

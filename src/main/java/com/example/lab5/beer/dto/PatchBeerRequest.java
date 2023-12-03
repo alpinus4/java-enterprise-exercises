@@ -20,4 +20,6 @@ public class PatchBeerRequest {
     private LocalDate brewingDate;
 
     private float alcoholContent;
+
+    private Long version;
 }

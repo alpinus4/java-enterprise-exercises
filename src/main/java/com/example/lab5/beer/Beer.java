@@ -2,6 +2,7 @@ package com.example.lab5.beer;
 
 import com.example.lab5.brewery.Brewery;
 import com.example.lab5.student.Student;
+import com.example.lab5.util.VersionAndTimestampsAuditable;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -25,7 +26,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Table(name = "beers")
-public class Beer implements Serializable {
+public class Beer extends VersionAndTimestampsAuditable implements Serializable {
     public enum Type {
         LIGHT, DARK;
     }

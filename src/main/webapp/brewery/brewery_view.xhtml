@@ -51,6 +51,11 @@
                                     </h:column>
 
                                     <h:column>
+                                        <f:facet name="header">${messages['beer.version']}</f:facet>
+                                        <h:outputText value="#{beer.version}"/>
+                                    </h:column>
+
+                                    <h:column>
                                         <f:facet name="header">${messages['view']}</f:facet>
                                         <h:link outcome="/beer/beer_view.xhtml" value="${messages['view']}">
                                             <f:param name="id" value="#{beer.id}"/>

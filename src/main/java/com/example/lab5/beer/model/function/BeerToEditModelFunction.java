@@ -14,6 +14,7 @@ public class BeerToEditModelFunction implements Function<Beer, BeerEditModel> {
                 .name(beer.getName())
                 .alcoholContent(beer.getAlcoholContent())
                 .type(beer.getType())
+                .version(beer.getVersion())
                 .brewery(BreweryEditModel.builder().id(beer.getBrewery().getId()).name(beer.getBrewery().getName()).build())
                 .build();
     }

@@ -24,5 +24,7 @@ public class GetBeerResponse {
 
     private LocalDate brewingDate;
 
+    private Long version;
+
     private float alcoholContent;
 }

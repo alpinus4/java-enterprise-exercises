@@ -15,6 +15,9 @@ public class BeerToModelFunction implements Function<Beer, BeerModel> {
                 .alcoholContent(beer.getAlcoholContent())
                 .type(beer.getType())
                 .brewery(beer.getBrewery())
+                .version(beer.getVersion())
+                .createdAtDateTime(beer.getCreatedAtDateTime())
+                .updatedAtDateTime(beer.getUpdatedAtDateTime())
                 .build();
     }
 }

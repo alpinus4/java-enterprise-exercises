@@ -20,6 +20,9 @@ public class UpdateBeerWithModelFunction implements Function3<Beer, BeerEditMode
                 .brewery(breweries.stream()
                         .filter(brewery -> brewery.getId().equals(request.getBrewery().getId()))
                         .findFirst().orElse(beer.getBrewery()))
+                .version(request.getVersion())
+                .createdAtDateTime(beer.getCreatedAtDateTime())
+                .updatedAtDateTime(beer.getUpdatedAtDateTime())
                 .build();
     }
 }
