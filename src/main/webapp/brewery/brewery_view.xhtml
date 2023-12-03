@@ -56,6 +56,16 @@
                                     </h:column>
 
                                     <h:column>
+                                        <f:facet name="header">${messages['beer.created']}</f:facet>
+                                        <h:outputText value="#{beer.createdAtDateTime}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">${messages['beer.updated']}</f:facet>
+                                        <h:outputText value="#{beer.updatedAtDateTime}"/>
+                                    </h:column>
+
+                                    <h:column>
                                         <f:facet name="header">${messages['view']}</f:facet>
                                         <h:link outcome="/beer/beer_view.xhtml" value="${messages['view']}">
                                             <f:param name="id" value="#{beer.id}"/>

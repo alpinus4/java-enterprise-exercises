@@ -61,6 +61,24 @@
                             </div>
                         </div>
 
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                ${messages['beer.created']}
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{beerView.beerModel.createdAtDateTime}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                ${messages['beer.updated']}
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{beerView.beerModel.updatedAtDateTime}"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

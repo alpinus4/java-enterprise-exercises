@@ -23,6 +23,8 @@ public class BreweryToModelFunction implements BiFunction<Brewery, List<Beer>, B
                                 .name(beer.getName())
                                 .alcoholContent(beer.getAlcoholContent())
                                 .version(beer.getVersion())
+                                .createdAtDateTime(beer.getCreatedAtDateTime())
+                                .updatedAtDateTime(beer.getUpdatedAtDateTime())
                                 .build())
                         .toList())
                 .build();

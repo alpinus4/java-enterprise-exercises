@@ -3,8 +3,11 @@ package com.example.lab5.brewery.model;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.persistence.Column;
 
 @Getter
 @Setter
@@ -37,6 +40,10 @@ public class BreweryModel {
         private String name;
 
         private Long version;
+
+        private LocalDateTime createdAtDateTime;
+
+        private LocalDateTime updatedAtDateTime;
 
         private float alcoholContent;
 
