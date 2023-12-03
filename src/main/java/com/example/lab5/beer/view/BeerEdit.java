@@ -9,10 +9,13 @@ import com.example.lab5.brewery.model.BreweryEditModel;
 import com.example.lab5.component.ModelFunctionFactory;
 
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 @ViewScoped
@@ -72,9 +76,19 @@ public class BeerEdit implements Serializable {
         }
     }
 
-    public String saveAction() throws IOException {
-        beerService.update(modelFunctionFactory.updateBeer().apply(beerService.findForCallerPrincipal(id).orElseThrow(), beer, breweryService.findAll()));
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+    public String saveAction() {
+        try {
+            beerService.update(modelFunctionFactory.updateBeer().apply(beerService.findForCallerPrincipal(id).orElseThrow(), beer, breweryService.findAll()));
+            String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+            return viewId + "?faces-redirect=true&includeViewParams=true";
+        } catch (EJBException exception) {
+            if (exception.getCause() instanceof OptimisticLockException) {
+                Beer current = beerService.findForCallerPrincipal(id).orElseThrow();
+                ResourceBundle bundle = ResourceBundle.getBundle("com.example.lab5.view.i18n.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("%s %s".formatted(bundle.getString("errors.version"), current.getVersion())));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("%s %s".formatted(bundle.getString("errors.entity"), current.toString())));
+            }
+            return null;
+        }
     }
 }
