@@ -5,6 +5,7 @@ import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.SneakyThrows;
 
 
@@ -21,7 +22,9 @@ public class StudentLogout {
 
     @SneakyThrows
     public String logoutAction() {
-        request.logout();//Session invalidate can possibly not work with JASPIC.
+        request.logout();
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        session.invalidate();
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return viewId + "?faces-redirect=true&includeViewParams=true";
     }

@@ -63,7 +63,7 @@ public class BeerEdit implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Beer> beer = beerService.find(id);
+        Optional<Beer> beer = beerService.findForCallerPrincipal(id);
         if (beer.isPresent()) {
             this.beer = modelFunctionFactory.beerToEditModel().apply(beer.get());
             this.breweries = breweryService.findAll().stream().map(brewery -> BreweryEditModel.builder().name(brewery.getName()).id(brewery.getId()).build()).toList();
@@ -73,7 +73,7 @@ public class BeerEdit implements Serializable {
     }
 
     public String saveAction() throws IOException {
-        beerService.update(modelFunctionFactory.updateBeer().apply(beerService.find(id).orElseThrow(), beer, breweryService.findAll()));
+        beerService.update(modelFunctionFactory.updateBeer().apply(beerService.findForCallerPrincipal(id).orElseThrow(), beer, breweryService.findAll()));
         String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return viewId + "?faces-redirect=true&includeViewParams=true";
     }

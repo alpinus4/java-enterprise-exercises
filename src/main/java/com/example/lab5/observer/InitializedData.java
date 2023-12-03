@@ -77,6 +77,16 @@ public class InitializedData {
             .roles(List.of(StudentRoles.USER))
             .build();
 
+            Student janek2 = Student.builder()
+            .id(UUID.fromString("a4727e51-37fd-48a9-89c4-c71fcad03f67"))
+            .name("Jan2")
+            .surname("Piwny2")
+            .birthDate(LocalDate.of(1997, 10, 21))
+            .login("janpiw2")
+            .password("abc")
+            .roles(List.of(StudentRoles.USER, StudentRoles.ADMIN))
+            .build();
+
             Student kuba = Student.builder()
             .id(UUID.fromString("4cb14aab-1cf6-44c9-8ee8-dfd96576c5e2"))
             .name("Kuba").surname("Mocny")
@@ -106,6 +116,7 @@ public class InitializedData {
             .build();
 
             studentService.create(janek);
+            studentService.create(janek2);
             studentService.create(kuba);
             studentService.create(asia);
             studentService.create(ania);

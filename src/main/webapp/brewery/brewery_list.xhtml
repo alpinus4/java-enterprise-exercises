@@ -24,15 +24,13 @@
                     </h:link>
                 </h:column>
 
-                <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
-                    <h:column>
-                        <f:facet name="header">Delete</f:facet>
-                        <h:form>
-                            <h:commandButton styleClass="btn" value="Delete"
-                                            action="#{breweryList.deleteAction(brewery)}"/>
-                        </h:form>
-                    </h:column>
-                </h:panelGroup>
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                    <f:facet name="header">Delete</f:facet>
+                    <h:form>
+                        <h:commandButton styleClass="btn" value="Delete"
+                                        action="#{breweryList.deleteAction(brewery)}"/>
+                    </h:form>
+                </h:column>
             </h:dataTable>
         </article>
     </ui:define>

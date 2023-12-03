@@ -45,7 +45,7 @@ public class BeerView implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Beer> beer = beerService.find(id);
+        Optional<Beer> beer = beerService.findForCallerPrincipal(id);
         if (beer.isPresent()) {
             beerModel = modelFunctionFactory.beerToModel().apply(beer.get());
         } else {

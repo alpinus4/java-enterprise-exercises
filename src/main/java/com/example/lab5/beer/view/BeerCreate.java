@@ -71,7 +71,7 @@ public class BeerCreate implements Serializable {
     }
 
     public String saveAction() throws IOException {
-        beerService.create(modelFunctionFactory.modelToBeer().apply(beer, breweryService.findAll()));
+        beerService.createForCallerPrincipal(modelFunctionFactory.modelToBeer().apply(beer, breweryService.findAll()));
         return "/brewery/brewery_list.xhtml?faces-redirect=true";
     }
 
