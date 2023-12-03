@@ -10,7 +10,7 @@
         <article class="text--justified">
             <header><h2>${messages['brewery.list.header']}</h2></header>
 
-            <h:dataTable value="#{breweryList.breweries.breweries}" var="brewery"
+            <h:dataTable value="#{breweryList.breweries.breweries}" var="brewery" id="breweriesTable"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
                     <f:facet name="header">${messages['brewery.name']}</f:facet>
@@ -28,7 +28,9 @@
                     <f:facet name="header">${messages['delete']}</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="${messages['delete']}"
-                                        action="#{breweryList.deleteAction(brewery)}"/>
+                                        action="#{breweryList.deleteAction(brewery)}">
+                                        <f:ajax execute="@this" render=":breweriesTable"/>
+                                        </h:commandButton>
                     </h:form>
                 </h:column>
             </h:dataTable>

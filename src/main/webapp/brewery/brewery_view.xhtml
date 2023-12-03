@@ -37,7 +37,7 @@
                         <div class="row mb-2">
                             <div class="col">
                                 <b>${messages['brewery.beers']}</b>
-                                <h:dataTable value="#{breweryView.brewery.beers}" var="beer"
+                                <h:dataTable value="#{breweryView.brewery.beers}" var="beer" id="beersTable"
                                              styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
                                     <h:column>
@@ -68,7 +68,9 @@
                                         <f:facet name="header">${messages['delete']}</f:facet>
                                         <h:form>
                                             <h:commandButton styleClass="btn" value="${messages['delete']}"
-                                                             action="#{breweryView.deleteBeerAction(beer)}"/>
+                                                             action="#{breweryView.deleteBeerAction(beer)}">
+                                                             <f:ajax execute="@this" render=":beersTable"/>
+                                                             </h:commandButton>
                                         </h:form>
                                     </h:column>
 
