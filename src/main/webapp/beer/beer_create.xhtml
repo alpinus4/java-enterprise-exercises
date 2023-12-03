@@ -12,14 +12,14 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Create beer</h2></header>
+            <header><h2>${messages['beer.create.header']}</h2></header>
             <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="name" value="#{beerCreate.beer.name}" styleClass="form-control"/>
-                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                            <h:outputLabel for="name" value="${messages['beer.name']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <fieldset>
-                            <legend class="form-label fs-6">Type:</legend>
+                            <legend class="form-label fs-6">${messages['beer.type']}:</legend>
                             <h:selectOneMenu value="#{beerCreate.beer.type}" >
                                 <f:selectItems value="#{beerCreate.beerTypes}" />
                             </h:selectOneMenu>
@@ -57,7 +57,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="brewingDate" value="#{beerCreate.beer.brewingDate}" styleClass="form-control"/>
-                            <h:outputLabel for="brewingDate" value="Brewing date:" styleClass="form-label"/>
+                            <h:outputLabel for="brewingDate" value="${messages['beer.date']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -66,18 +66,18 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="alcoholContent" value="#{beerCreate.beer.alcoholContent}" styleClass="form-control"/>
-                            <h:outputLabel for="alcoholContent" value="Alcohol content:" styleClass="form-label"/>
+                            <h:outputLabel for="alcoholContent" value="${messages['beer.alcohol']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Create"
+                        <h:commandButton styleClass="btn btn-primary" value="${messages['create']}"
                                          action="#{beerCreate.saveAction()}"/>
                     </div>
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" value="Cancel"
+                        <h:commandButton styleClass="btn btn-secondary" value="${messages['cancel']}"
                                          action="#{beerCreate.cancelAction()}"/>
                     </div>
                 </div>

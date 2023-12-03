@@ -12,7 +12,7 @@
         <meta name="keywords" content="Beer"/>
         <meta name="author" content="Mateusz Grzonka"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Students drinking beer</title>
+        <title>${messages['title']}</title>
 
         <h:outputStylesheet library="webjars" name="mdb-ui-kit/6.4.0/css/mdb.min.css"/>
         <h:outputStylesheet library="default" name="main.css"/>
@@ -23,13 +23,13 @@
     <h:body>
         <div class="container">
             <header class="mb-4 mt-4">
-                <h1>Students drinking beer</h1>
+                <h1>${messages['title']}</h1>
                 <h:graphicImage styleClass="beer-icon rounded-circle" alt="beer icon"
                                 value="/resources/cartoon-beer-icon-png.png"/>
                 <h:form styleClass="container d-flex  align-items-center justify-content-end"
                         rendered="#{facesContext.externalContext.userPrincipal != null}">
-                    Logged: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
-                    <h:commandButton styleClass="btn btn-link" value="Logout"
+                    ${messages['logged']}: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
+                    <h:commandButton styleClass="btn btn-link" value="${messages['logout']}"
                                         action="#{studentLogout.logoutAction()}"/>
                 </h:form>
             </header>
@@ -38,18 +38,18 @@
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <h:link styleClass="nav-link" outcome="/index.xhtml">Home</h:link>
+                            <h:link styleClass="nav-link" outcome="/index.xhtml">${messages['home.header']}</h:link>
                         </li>
                         <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                             <li class="nav-item">
                                 <h:link styleClass="nav-link"
-                                        outcome="/student/student_list.xhtml">Students</h:link>
+                                        outcome="/student/student_list.xhtml">${messages['students.header']}</h:link>
                             </li>
                         </h:panelGroup>
 
                         <li class="nav-item">
                             <h:link styleClass="nav-link"
-                                    outcome="/brewery/brewery_list.xhtml">Breweries</h:link>
+                                    outcome="/brewery/brewery_list.xhtml">${messages['breweries.header']}</h:link>
                         </li>
                     </ul>
                 </div>

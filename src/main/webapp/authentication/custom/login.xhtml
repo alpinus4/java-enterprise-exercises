@@ -13,7 +13,7 @@
                         <div class="col-4 p-2">
                             <div class="form-outline">
                                 <h:inputText id="username" name="j_username" type="text" class="form-control" value="#{studentLogin.login}"/>
-                                <h:outputLabel for="username" styleClass="form-label" value="Name:"/>
+                                <h:outputLabel for="username" styleClass="form-label" value="${messages['login']}:"/>
                             </div>
                         </div>
                     </div>
@@ -22,17 +22,17 @@
                         <div class="col-4 p-2">
                             <div class="form-outline">
                                 <h:inputSecret id="password" name="j_password" styleClass="form-control" value="#{studentLogin.password}"/>
-                                <h:outputLabel for="password" class="form-label" value="Password:"/>
+                                <h:outputLabel for="password" class="form-label" value="${messages['password']}:"/>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-2 p-2 text-center">
-                            <h:commandButton styleClass="btn btn-primary" type="submit" value="Login" action="#{studentLogin.loginAction()}"/>
+                            <h:commandButton styleClass="btn btn-primary" type="submit" value="${messages['loginbtn']}" action="#{studentLogin.loginAction()}"/>
                         </div>
                         <div class="col-2 p-2 text-center">
-                            <h:commandButton styleClass="btn btn-secondary" type="reset" value="Reset"/>
+                            <h:commandButton styleClass="btn btn-secondary" type="reset" value="${messages['reset']}"/>
                         </div>
                     </div>
                 </h:form>

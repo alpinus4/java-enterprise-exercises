@@ -18,7 +18,7 @@
                     <div class="col-6">
                         <div class="row mb-2">
                             <div class="col-6">
-                                Establishment date
+                                ${messages['brewery.date']}
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{breweryView.brewery.establishmentDate}"/>
@@ -27,7 +27,7 @@
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                Location
+                                ${messages['brewery.location']}
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{breweryView.brewery.location}"/>
@@ -36,45 +36,45 @@
 
                         <div class="row mb-2">
                             <div class="col">
-                                <b>Beers</b>
+                                <b>${messages['brewery.beers']}</b>
                                 <h:dataTable value="#{breweryView.brewery.beers}" var="beer"
                                              styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
                                     <h:column>
-                                        <f:facet name="header">Name</f:facet>
+                                        <f:facet name="header">${messages['beer.name']}</f:facet>
                                         <h:outputText value="#{beer.name}"/>
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Alcohol content</f:facet>
+                                        <f:facet name="header">${messages['beer.alcohol']}</f:facet>
                                         <h:outputText value="#{beer.alcoholContent}"/>
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">View</f:facet>
-                                        <h:link outcome="/beer/beer_view.xhtml" value="View">
+                                        <f:facet name="header">${messages['view']}</f:facet>
+                                        <h:link outcome="/beer/beer_view.xhtml" value="${messages['view']}">
                                             <f:param name="id" value="#{beer.id}"/>
                                         </h:link>
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Edit</f:facet>
-                                        <h:link outcome="/beer/beer_edit.xhtml" value="Edit">
+                                        <f:facet name="header">${messages['edit']}</f:facet>
+                                        <h:link outcome="/beer/beer_edit.xhtml" value="${messages['edit']}">
                                             <f:param name="id" value="#{beer.id}"/>
                                         </h:link>
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Delete</f:facet>
+                                        <f:facet name="header">${messages['delete']}</f:facet>
                                         <h:form>
-                                            <h:commandButton styleClass="btn" value="Delete"
+                                            <h:commandButton styleClass="btn" value="${messages['delete']}"
                                                              action="#{breweryView.deleteBeerAction(beer)}"/>
                                         </h:form>
                                     </h:column>
 
                                     <f:facet name="footer">
                                         <h:link styleClass="btn" outcome="/beer/beer_create.xhtml"
-                                                  value="Create new beer">
+                                                  value="${messages['beer.create.header']}">
                                             <f:param name="breweryid" value="#{breweryView.id}"/>
                                         </h:link>
                                     </f:facet>

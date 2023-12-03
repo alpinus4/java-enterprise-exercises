@@ -18,7 +18,7 @@
                     <div class="col-9">
                         <div class="row mb-2">
                             <div class="col-6">
-                                Birthdate
+                                ${messages['student.birthdate']}
                             </div>
                             <div class="col-6">
                                 <h:outputText value="#{studentView.studentModel.birthDate}"/>
@@ -26,17 +26,17 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col">
-                                <b>Drunken beers</b>
+                                <b>${messages['student.beers']}</b>
                                 <h:dataTable value="#{studentView.studentModel.drunkenBeers}" var="beer"
                                              styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
 
                                     <h:column>
-                                        <f:facet name="header">Name</f:facet>
+                                        <f:facet name="header">${messages['beer.name']}</f:facet>
                                         <h:outputText value="#{beer.name}"/>
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Alcohol content</f:facet>
+                                        <f:facet name="header">${messages['beer.alcohol']}</f:facet>
                                         <h:outputText value="#{beer.alcoholContent}"/>
                                     </h:column>
 

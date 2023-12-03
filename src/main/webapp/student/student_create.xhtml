@@ -11,14 +11,14 @@
 
     <ui:define name="content">
         <article>
-            <header><h2>Create student</h2></header>
+            <header><h2>${messages['student.create.header']}</h2></header>
             <h:form styleClass="container" onreset="onReset()" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="name" value="#{studentCreate.student.name}" styleClass="form-control"/>
-                            <h:outputLabel for="name" value="Name:" styleClass="form-label"/>
+                            <h:outputLabel for="name" value="${messages['student.name']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="surname" value="#{studentCreate.student.surname}" styleClass="form-control"/>
-                            <h:outputLabel for="surname" value="Surname:" styleClass="form-label"/>
+                            <h:outputLabel for="surname" value="${messages['student.surname']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="col-4 p-2">
                         <div class="form-outline">
                             <h:inputText id="birthdate" value="#{studentCreate.student.birthDate}" styleClass="form-control"/>
-                            <h:outputLabel for="birthdate" value="Birthdate:" styleClass="form-label"/>
+                            <h:outputLabel for="birthdate" value="${messages['student.birthdate']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
@@ -46,18 +46,18 @@
                         <div class="form-outline">
                             <h:inputFile id="avatar" value="#{studentCreate.student.avatar}"
                                          styleClass="form-control active"/>
-                            <h:outputLabel for="avatar" value="Avatar:" styleClass="form-label"/>
+                            <h:outputLabel for="avatar" value="${messages['student.avatar']}:" styleClass="form-label"/>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-primary" value="Create"
+                        <h:commandButton styleClass="btn btn-primary" value="${messages['create']}"
                                          action="#{studentCreate.saveAction()}"/>
                     </div>
                     <div class="col-2 p-2 text-center">
-                        <h:commandButton styleClass="btn btn-secondary" value="Cancel"
+                        <h:commandButton styleClass="btn btn-secondary" value="${messages['cancel']}"
                                          action="#{studentCreate.cancelAction()}"/>
                     </div>
                 </div>

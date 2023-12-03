@@ -8,26 +8,26 @@
     <ui:define name="content">
 
         <article class="text--justified">
-            <header><h2>Breweries</h2></header>
+            <header><h2>${messages['brewery.list.header']}</h2></header>
 
             <h:dataTable value="#{breweryList.breweries.breweries}" var="brewery"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
-                    <f:facet name="header">Name</f:facet>
+                    <f:facet name="header">${messages['brewery.name']}</f:facet>
                     <h:outputText value="#{brewery.name}"/>
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">View</f:facet>
-                    <h:link outcome="/brewery/brewery_view.xhtml" value="View">
+                    <f:facet name="header">${messages['view']}</f:facet>
+                    <h:link outcome="/brewery/brewery_view.xhtml" value="${messages['view']}">
                         <f:param name="id" value="#{brewery.id}"/>
                     </h:link>
                 </h:column>
 
                 <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
-                    <f:facet name="header">Delete</f:facet>
+                    <f:facet name="header">${messages['delete']}</f:facet>
                     <h:form>
-                        <h:commandButton styleClass="btn" value="Delete"
+                        <h:commandButton styleClass="btn" value="${messages['delete']}"
                                         action="#{breweryList.deleteAction(brewery)}"/>
                     </h:form>
                 </h:column>
