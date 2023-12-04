@@ -24,8 +24,7 @@
         <div class="container">
             <header class="mb-4 mt-4">
                 <h1>${messages['title']}</h1>
-                <h:graphicImage styleClass="beer-icon rounded-circle" alt="beer icon"
-                                value="${messages['image']}"/>
+                <h:graphicImage styleClass="beer-icon rounded-circle" alt="beer icon" library="img" name="cartoon-beer-icon-png.png"/>
                 <h:form styleClass="container d-flex  align-items-center justify-content-end"
                         rendered="#{facesContext.externalContext.userPrincipal != null}">
                     ${messages['logged']}: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
