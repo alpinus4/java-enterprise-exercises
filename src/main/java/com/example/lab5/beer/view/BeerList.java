@@ -56,7 +56,6 @@ public class BeerList implements Serializable {
     }
 
     public void search() {
-        System.out.println(beerFiltersModel);
         if (beerFiltersModel.anyUsed()) {
             beers = factory.beersToModel().apply(beerService.search(beerFiltersModel));
         } else {
