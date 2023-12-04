@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.example.lab5.beer.interceptor.LogMethodCall;
+import com.example.lab5.beer.model.BeerFiltersModel;
 import com.example.lab5.brewery.Brewery;
 import com.example.lab5.brewery.BreweryRepository;
 import com.example.lab5.student.Student;
@@ -161,4 +162,10 @@ public class BeerService {
         }
         throw new EJBAccessException("Caller not authorized.");
     }
+
+    public List<Beer> search(BeerFiltersModel beerFiltersModel) {
+        assert beerRepository != null;
+        return beerRepository.search(beerFiltersModel);
+    }
+
 }

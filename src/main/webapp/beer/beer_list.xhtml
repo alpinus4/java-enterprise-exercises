@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewAction action="#{beerList.init()}"/>
+    </f:metadata>
+            
+
+    <ui:define name="content">
+
+        <article class="text--justified">
+            <header><h2>${messages['beers.header']}</h2></header>
+
+            <div class="flex p-4">
+                <h:form id="testForm">
+                    <div class="flex flex-row">
+                        <div class="p-4">
+                            <div class="caption">${messages['beer.name']}</div>
+                            <h:inputText
+                                    styleClass="border rounded-lg p-2"
+                                    id="name"
+                                    value="${beerList.beerFiltersModel.name}"
+                            />
+                        </div>
+                        <div class="p-4">
+                            <div class="caption">${messages['beer.brewery']}</div>
+                            <h:inputText
+                                    styleClass="border rounded-lg p-2"
+                                    id="brewery_name"
+                                    value="${beerList.beerFiltersModel.brewery_name}"
+                            />
+                        </div>
+                        <div class="p-4">
+                            <div class="caption">${messages['beer.type']}</div>
+                                <h:selectOneMenu value="#{beerList.beerFiltersModel.type}" >
+                                    <f:selectItems value="#{beerList.beerTypes}" />
+                                </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <h:commandButton
+                            styleClass="btn btn-primary"
+                            action="#{beerList.search()}"
+                            value="${messages['beers.search']}">
+                        <f:ajax execute=":testForm" render=":beersTableForm:beersTable"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+            <h:form id="beersTableForm">
+            <h:dataTable value="#{beerList.beers.beers}" var="beer" id="beersTable"
+                         styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+                <h:column>
+                    <f:facet name="header">${messages['beer.name']}</f:facet>
+                    <h:outputText value="#{beer.name}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">${messages['beer.brewery']}</f:facet>
+                    <h:outputText value="#{beer.brewery.name}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">${messages['beer.type']}</f:facet>
+                    <h:outputText value="#{beer.type.toString()}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">${messages['beer.date']}</f:facet>
+                    <h:outputText value="#{beer.brewingDate}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">${messages['beer.alcohol']}</f:facet>
+                    <h:outputText value="#{beer.alcoholContent}"/>
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">${messages['beer.version']}</f:facet>
+                    <h:outputText value="#{beer.version}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">${messages['beer.created']}</f:facet>
+                    <h:outputText value="#{beer.createdAtDateTime}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">${messages['beer.updated']}</f:facet>
+                    <h:outputText value="#{beer.updatedAtDateTime}"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+        </article>
+    </ui:define>
+
+</ui:composition>

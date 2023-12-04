@@ -2,6 +2,7 @@ package com.example.lab5.component;
 
 import com.example.lab5.beer.model.function.BeerToEditModelFunction;
 import com.example.lab5.beer.model.function.BeerToModelFunction;
+import com.example.lab5.beer.model.function.BeersToModelFunction;
 import com.example.lab5.beer.model.function.ModelToBeerFunction;
 import com.example.lab5.beer.model.function.UpdateBeerWithModelFunction;
 import com.example.lab5.brewery.model.function.BreweriesToModelFunction;
@@ -42,6 +43,10 @@ public class ModelFunctionFactory {
 
     public BeerToModelFunction beerToModel() {
         return new BeerToModelFunction();
+    }
+
+    public BeersToModelFunction beersToModel() {
+        return new BeersToModelFunction();
     }
 
     public BeerToEditModelFunction beerToEditModel() {

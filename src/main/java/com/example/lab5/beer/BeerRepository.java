@@ -1,5 +1,6 @@
 package com.example.lab5.beer;
 
+import com.example.lab5.beer.model.BeerFiltersModel;
 import com.example.lab5.brewery.Brewery;
 import com.example.lab5.repository.Repository;
 import com.example.lab5.student.Student;
@@ -95,4 +96,19 @@ public class BeerRepository implements Repository<Beer, UUID> {
     public void update(Beer entity) {
         em.merge(entity);
     }
+
+    public List<Beer> search(BeerFiltersModel beerFiltersModel) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Beer> query = cb.createQuery(Beer.class);
+        Root<Beer> root = query.from(Beer.class);
+
+        query.select(root).where(
+            cb.and(cb.or(beerFiltersModel.getName() != "" ? cb.like(root.get(Beer_.name), "%"+beerFiltersModel.getName()+"%") : cb.isNotNull(root.get(Beer_.id))),
+                   cb.or(beerFiltersModel.getType() != null ? cb.equal(root.get(Beer_.type), beerFiltersModel.getType()) : cb.isNotNull(root.get(Beer_.id))),
+                   cb.or(beerFiltersModel.getBrewery_name() != "" ? cb.like(root.get(Beer_.brewery).get("name"), "%"+beerFiltersModel.getBrewery_name()+"%") : cb.isNotNull(root.get(Beer_.id)))
+                   )
+                   );
+        return em.createQuery(query).getResultList();
+    }
+
 }
