@@ -11,6 +11,10 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import lombok.NoArgsConstructor;
 import jakarta.transaction.Transactional;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -34,10 +38,11 @@ public class BeerRepository implements Repository<Beer, UUID> {
 
     public Optional<Beer> findByIdAndStudent(UUID id, Student student) {
         try {
-            return Optional.of(em.createQuery("select b from Beer b where b.id = :id and b.student = :student", Beer.class)
-                    .setParameter("id", id)
-                    .setParameter("student", student)
-                    .getSingleResult());
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Beer> query = cb.createQuery(Beer.class);
+            Root<Beer> root = query.from(Beer.class);
+            query.select(root).where(cb.equal(root.get(Beer_.student), student)).where(cb.equal(root.get(Beer_.id), id));
+            return Optional.of(em.createQuery(query).getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
@@ -45,26 +50,35 @@ public class BeerRepository implements Repository<Beer, UUID> {
 
     @Override
     public List<Beer> findAll() {
-        return em.createQuery("select b from Beer b", Beer.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Beer> query = cb.createQuery(Beer.class);
+        Root<Beer> root = query.from(Beer.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     public List<Beer> findAllByStudent(Student student) {
-        return em.createQuery("select b from Beer b where b.student = :student", Beer.class)
-                .setParameter("student", student)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Beer> query = cb.createQuery(Beer.class);
+        Root<Beer> root = query.from(Beer.class);
+        query.select(root).where(cb.equal(root.get(Beer_.student), student));
+        return em.createQuery(query).getResultList();
     }
 
     public List<Beer> findAllByBrewery(Brewery brewery) {
-        return em.createQuery("select b from Beer b where b.brewery = :brewery", Beer.class)
-                .setParameter("brewery", brewery)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Beer> query = cb.createQuery(Beer.class);
+        Root<Beer> root = query.from(Beer.class);
+        query.select(root).where(cb.equal(root.get(Beer_.brewery), brewery));
+        return em.createQuery(query).getResultList();
     }
 
     public List<Beer> findAllByBreweryAndStudent(Brewery brewery, Student student) {
-        return em.createQuery("select b from Beer b where b.brewery = :brewery and b.student = :student", Beer.class)
-                .setParameter("student", student)
-                .setParameter("brewery", brewery)
-                .getResultList();
+                CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Beer> query = cb.createQuery(Beer.class);
+        Root<Beer> root = query.from(Beer.class);
+        query.select(root).where(cb.equal(root.get(Beer_.student), student)).where(cb.equal(root.get(Beer_.brewery), brewery));
+        return em.createQuery(query).getResultList();
     }
 
     @Override

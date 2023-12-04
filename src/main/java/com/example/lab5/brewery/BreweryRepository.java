@@ -5,6 +5,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +35,11 @@ public class BreweryRepository implements Repository<Brewery, UUID> {
     @Override
     
     public List<Brewery> findAll() {
-        return em.createQuery("select b from Brewery b", Brewery.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Brewery> query = cb.createQuery(Brewery.class);
+        Root<Brewery> root = query.from(Brewery.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override

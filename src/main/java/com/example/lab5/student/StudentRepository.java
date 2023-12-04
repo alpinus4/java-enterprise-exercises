@@ -1,11 +1,15 @@
 package com.example.lab5.student;
 
+import com.example.lab5.beer.Beer_;
 import com.example.lab5.repository.Repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -33,14 +37,20 @@ public class StudentRepository implements Repository<Student, UUID> {
     @Override
     
     public List<Student> findAll() {
-        return em.createQuery("select s from Student s", Student.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Student> query = cb.createQuery(Student.class);
+        Root<Student> root = query.from(Student.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     public Optional<Student> findByLogin(String login) {
         try {
-            return Optional.of(em.createQuery("select u from Student u where u.login = :login", Student.class)
-                    .setParameter("login", login)
-                    .getSingleResult());
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Student> query = cb.createQuery(Student.class);
+            Root<Student> root = query.from(Student.class);
+            query.select(root).where(cb.equal(root.get(Student_.login), login));
+            return Optional.of(em.createQuery(query).getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
